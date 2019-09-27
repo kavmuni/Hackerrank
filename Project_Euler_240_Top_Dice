@@ -1,0 +1,44 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Sep 19 19:36:44 2019
+
+@author: mraj112017
+"""
+
+from itertools import product
+input_string=input("Enter the details: ")
+input_string_list=[input_string.split(' ')]
+#print(input_string_list[0][0])
+number_of_dice=int(input_string_list[0][0])
+number_of_sides=int(input_string_list[0][1])
+top_numbers=int(input_string_list[0][2])
+sum_equal=int(input_string_list[0][3])
+
+if ((number_of_dice >= 1) and (number_of_dice <= 10000) and (top_numbers >= 1) and (top_numbers <= 50) and (top_numbers <= number_of_dice) and (number_of_sides >= 4) and (number_of_sides <= 50) and (top_numbers <= sum_equal) and (sum_equal <= (number_of_sides * top_numbers))):
+
+    number_of_sides_list=[(lambda x:x-1) (x) for x in range(2,number_of_sides+2)]
+
+#print(list(enumerate(chain(range(1, number_of_sides), range(number_of_sides, 0, -1)), number_of_dice)))    
+#whole_poss_list=[v for v, r in enumerate(chain(range(1, number_of_sides), range(number_of_sides, 0, -1)), number_of_dice) for _ in range(r)] 
+#print(whole_poss_list) 
+
+    whole_poss_list_01=list(product(number_of_sides_list, repeat=number_of_dice))
+ 
+#print(whole_poss_list_01)
+
+    sum_01=0
+    count=0
+
+    for i in whole_poss_list_01:
+    #print(type(i))
+    #print(i)
+        i=list(i)
+        i.sort(reverse=True)
+    #print(i)
+        i_sliced=i[:top_numbers]  
+    #print(i_sliced)
+        sum_01=sum(i_sliced)    
+        if sum_01 == sum_equal:
+            count=count+1
+        sum_01=0
+    print(count%1000000007)
